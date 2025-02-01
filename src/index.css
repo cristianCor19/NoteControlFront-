@@ -1,2 +1,7 @@
 @import 'tailwindcss';
 
+@theme {
+  --color-blue-ti: #2ec7c0;
+  --color-blue-link: #00abc5;
+
+}
