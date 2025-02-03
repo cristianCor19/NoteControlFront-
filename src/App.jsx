@@ -11,6 +11,7 @@ import { UserProvider } from "./context/UserContext"
 import Login from "./pages/login"
 import RegisterUser from "./pages/RegisterUser"
 import HomePage from "./pages/HomePage"
+import Activities from "./pages/Activities"
 
 function App() {
  
@@ -27,6 +28,8 @@ function App() {
               <Route element={<ProtectedRoute/>}>
                 <Route element={<ProtectedLayout/>}>
                   <Route path="/home" element={<HomePage/> }/>
+                  <Route path="/activities" element={<Activities/> }/>
+
                 </Route>
               </Route>
             </Routes>
