@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { BookOpen, Rocket, Users } from "lucide-react"
+import { Link } from "react-router-dom"
 
 export default function WelcomeHome() {
   return (
@@ -9,7 +10,7 @@ export default function WelcomeHome() {
         Organiza tus actividades, colabora con compañeros y alcanza tus metas académicas de manera eficiente.
       </p>
       <div className="flex justify-center space-x-4 mb-12">
-        <Button className="bg-blue-600 hover:bg-blue-700">Comenzar</Button>
+        <Button className="bg-blue-600 hover:bg-blue-700"><Link to="/activities">Comenzar</Link> </Button>
         <Button variant="outline">Explorar Materias</Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
