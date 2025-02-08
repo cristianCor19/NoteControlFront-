@@ -1,11 +1,12 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { Link, useLocation } from 'react-router-dom'
+import { useSession } from '@/context/SessionContext'
 
 const navigation = [
   { name: 'Inicio', href: '/home' },
   { name: 'Actividades', href: '/activities', },
-  { name: 'Projects', href: '#'},
+  { name: 'Tareas', href: '/task'},
 ]
 
 function classNames(...classes) {
@@ -15,6 +16,7 @@ function classNames(...classes) {
 
 function Navbar() {
   const location = useLocation();
+  const {logout} = useSession();
 
   const isCurrentPage = (href) => {
     return location.pathname === href
@@ -34,7 +36,7 @@ function Navbar() {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center -ml-12 sm:ml-0">
-              <h1 className='text-white text-3xl font-bold '>Notes control</h1>
+              <h1 className='text-white text-3xl font-bold'><Link to="/">Notes control</Link></h1>
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
@@ -98,12 +100,15 @@ function Navbar() {
                   </a>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    href="#"
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      logout()
+                    }}
                     className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                   >
                     Cerrar sesion
-                  </a>
+                  </Link>
                 </MenuItem>
               </MenuItems>
             </Menu>

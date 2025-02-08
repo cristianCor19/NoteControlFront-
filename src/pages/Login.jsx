@@ -15,7 +15,7 @@ function Login() {
   });
   const navigate = useNavigate();
 
-  const {signin ,isAuthenticated, errors: signinErrors} = useSession();
+  const {signin ,isAuthenticated} = useSession();
 
 
   const onSubmit = handleSubmit(async(data) => {
