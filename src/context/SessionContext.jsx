@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import { loginUserRequest, verifySessionRequest } from "../api/session";
 
-export const SessionContext = createContext();
+const SessionContext = createContext();
 
 export const useSession = () =>{
   const context = useContext(SessionContext);
@@ -20,26 +20,31 @@ export const SessionProvider = ({children}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([])
   const [loading, setLoading] = useState(true)
+  const token = localStorage.getItem('token');
+
+  // console.log(profile.data);
+  
 
   const signin = async(data) => {
     try {
-      console.log(data);
       const res = await loginUserRequest(data);
-      // console.log(res);
-      
       setIsAuthenticated(true)
       localStorage.setItem('token', res.data.token); 
     } catch (error) {
       setErrors(Array.isArray(error.response.data))
         ? error.response.data
         : [error.response.data.message]
-      
     }
+  }
+
+  const logout = ()=> {
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
   }
 
   useEffect(() =>{
     async function checkLogin(){
-      const token = localStorage.getItem('token');
+      
 
       if(!token){
         setIsAuthenticated(false);
@@ -72,8 +77,7 @@ export const SessionProvider = ({children}) => {
         errors,
         loading,
         signin,
-        
-
+        logout
       }}
       >
       {children}
