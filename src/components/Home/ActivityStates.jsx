@@ -1,7 +1,18 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle, Clock, ListTodo } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CheckCircle, Clock, ListTodo } from "lucide-react";
+import { useActivity } from "@/context/ActivityContext";
+import { useEffect } from "react";
 
 export default function ActivityStates() {
+  const {totalByState, fetchTotalActivitiesByState} = useActivity();
+  
+  useEffect(() => {
+      const fetchData = async () => {
+        await fetchTotalActivitiesByState();
+      };
+      fetchData();
+    }, []);
+
   return (
     <section className="pt-2 pb-16 px-4 bg-gray-50">
       <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Gestiona tus Actividades</h2>
@@ -10,21 +21,21 @@ export default function ActivityStates() {
           icon={<ListTodo className="w-8 h-8 text-blue-500" />}
           title="Por Hacer"
           description="Actividades pendientes que necesitas comenzar."
-          count={5}
+          count={totalByState.pending}
           color="bg-blue-100"
         />
         <ActivityStateCard
           icon={<Clock className="w-8 h-8 text-yellow-500" />}
           title="En Progreso"
           description="Actividades que estás trabajando actualmente."
-          count={3}
+          count={totalByState.progress}
           color="bg-yellow-100"
         />
         <ActivityStateCard
           icon={<CheckCircle className="w-8 h-8 text-green-500" />}
           title="Completadas"
           description="Actividades que has terminado con éxito."
-          count={8}
+          count={totalByState.completed}
           color="bg-green-100"
         />
       </div>
