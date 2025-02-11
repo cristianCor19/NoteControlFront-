@@ -19,12 +19,7 @@ function ActivityList() {
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState(null);
-  const { getActivitiesUser, activities, fetchActivityById, activity} = useActivity();
-  
-  const getActivityById = async(activityId) => {
-    await fetchActivityById(activityId);
-        
-  }
+  const { getActivitiesUser, activities} = useActivity();
 
   useEffect(() => {
     const fetchData = async () => {
