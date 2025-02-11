@@ -6,6 +6,12 @@ export const getSubjectsRequest = (token) => axios.get(`/subject/get-subjects`,{
   }
 })
 
+export const getSubjectsWithActivities = (token) => axios.get(`/subject/activities`,{
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+})
+
 export const saveSubjectRequest= (data, token) => axios.post(`/subject/save-subject`, data, {
   headers: {
     Authorization: `Bearer ${token}`

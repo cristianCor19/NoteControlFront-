@@ -6,6 +6,12 @@ export const getActivityById = (token, activityId) => axios.get(`/activity/${act
   }
 })
 
+export const getActivitySubjectId = (token, subjectId) => axios.get(`/activity/subject/${subjectId}`, {
+  headers: {
+    Authorization: `Bearer ${token}`
+  }
+})
+
 export const getActivitiesRequest = (token, state) => axios.get(`/activity/user?state=${state}`,{
   headers: {
     Authorization: `Bearer ${token}`
