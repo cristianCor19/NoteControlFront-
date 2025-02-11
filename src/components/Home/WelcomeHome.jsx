@@ -11,7 +11,7 @@ export default function WelcomeHome() {
       </p>
       <div className="flex justify-center space-x-4 mb-12">
         <Button className="bg-blue-600 hover:bg-blue-700"><Link to="/activities">Comenzar</Link> </Button>
-        <Button variant="outline">Explorar Materias</Button>
+        <Button variant="outline"><Link to="/subjects">Explorar Materias</Link></Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
         <FeatureCard
