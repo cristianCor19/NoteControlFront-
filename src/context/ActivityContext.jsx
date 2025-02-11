@@ -6,10 +6,11 @@ import {
   saveActivityRequest,
   getActivitiesRequest,
   getTotalActivitiesByState,
-  updateActivity
- } from "@/api/activity";
+  updateActivity,
+  getActivitySubjectId
+ } from "../api/activity";
 
-const ActivityContext = createContext();
+export const ActivityContext = createContext();
 
 export const useActivity = () => {
   const context = useContext(ActivityContext);
@@ -24,14 +25,16 @@ export const useActivity = () => {
 export const ActivityProvider = ({ children }) => {
   const [activity, setActivity] = useState([]);
   const [activities, setActivities] = useState([]);
+  const [activitiesBySubject, setActivitiesBySubject] = useState([]);
   const [saveSucess, setSaveSuccess]= useState(false)
   const [totalByState, setTotalByState] = useState([]);
   // const [errors, setErrors] = useState([]);
-  const token = localStorage.getItem('token');
+
 
 
   const getActivitiesUser = async(state) => {
-    try {      
+    try {     
+      const token = localStorage.getItem('token');
       const res = await getActivitiesRequest(token, state);
       setActivities(res.data.data)
       
@@ -45,6 +48,7 @@ export const ActivityProvider = ({ children }) => {
 
   const saveActities = async(data) => {
     try {
+      const token = localStorage.getItem('token');
       const res = await saveActivityRequest(data, token);
       
       if(res.data.status === true){
@@ -64,6 +68,7 @@ export const ActivityProvider = ({ children }) => {
 
   const fetchUpdateActivity = async(activity) => {
     try {
+      const token = localStorage.getItem('token');
       const res = await updateActivity(token, activity);
       console.log(res);
       
@@ -75,6 +80,7 @@ export const ActivityProvider = ({ children }) => {
 
   const fetchTotalActivitiesByState = async() => {
     try {
+      const token = localStorage.getItem('token');
       const res = await  getTotalActivitiesByState(token);
       setTotalByState(res.data.data)
       
@@ -85,8 +91,21 @@ export const ActivityProvider = ({ children }) => {
   
   const fetchActivityById = async(activityId) => {
     try {
+      const token = localStorage.getItem('token');
       const res = await getActivityById(token, activityId);
       setActivity(res.data.data)
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+
+  const fetchActivitySubjectId = async(subjectId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await getActivitySubjectId(token, subjectId);
+      setActivitiesBySubject(res.data.data)
       
     } catch (error) {
       console.log(error);
@@ -103,15 +122,19 @@ export const ActivityProvider = ({ children }) => {
         activities,
         activity,
         totalByState,
+        activitiesBySubject,
         getActivitiesUser,
         fetchActivityById,
         saveActities,
         fetchUpdateActivity,
         setSaveSuccess,
-        fetchTotalActivitiesByState
+        fetchTotalActivitiesByState,
+        fetchActivitySubjectId
       }}
     >
       {children}
     </ActivityContext.Provider>
   )
 }
+
+export default ActivityContext

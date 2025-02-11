@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 import { loginUserRequest, verifySessionRequest } from "../api/session";
 
-const SessionContext = createContext();
+export const SessionContext = createContext();
 
 export const useSession = () =>{
   const context = useContext(SessionContext);
@@ -20,7 +20,7 @@ export const SessionProvider = ({children}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([])
   const [loading, setLoading] = useState(true)
-  const token = localStorage.getItem('token');
+  
 
   // console.log(profile.data);
   
@@ -43,6 +43,7 @@ export const SessionProvider = ({children}) => {
   }
 
   useEffect(() =>{
+    const token = localStorage.getItem('token');
     async function checkLogin(){
       
 

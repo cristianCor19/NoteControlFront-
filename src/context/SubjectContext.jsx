@@ -1,12 +1,12 @@
 import { createContext, useState, useContext } from "react";
 import { enqueueSnackbar } from "notistack";
-import { saveSubjectRequest, getSubjectsRequest } from "@/api/subject";
+import { saveSubjectRequest, getSubjectsRequest, getSubjectsWithActivities } from "@/api/subject";
 
 
 
 
 // Create and export the context directly as a named export
-const SubjectContext = createContext();
+export const SubjectContext = createContext();
 
 // Custom hook as named export
 export const useSubject = () => {
@@ -22,10 +22,12 @@ export const useSubject = () => {
 // Provider component as named export
 export const SubjectProvider = ({ children }) => {
   const [subjects, setSubjects] = useState([]);
-  const token = localStorage.getItem("token");
+  const [subjectsWithActivities, setSubjectsWithActivities] = useState([]);
+  
 
   const getSubjects = async() => {
     try {
+      const token = localStorage.getItem("token");
       const res = await getSubjectsRequest(token);
       setSubjects(res.data.data)
     } catch (error) {
@@ -33,8 +35,19 @@ export const SubjectProvider = ({ children }) => {
     }
   }
 
+  const fetchSubjectWithActivities = async() => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await getSubjectsWithActivities(token);
+      setSubjectsWithActivities(res.data.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const saveSubject = async (data) => {
     try {
+      const token = localStorage.getItem("token");
       const res = await saveSubjectRequest(data, token);
       if(res.status === 201){
         enqueueSnackbar("Materia registrada con éxito", {
@@ -52,11 +65,15 @@ export const SubjectProvider = ({ children }) => {
     <SubjectContext.Provider
       value={{
         subjects,
+        subjectsWithActivities,
         saveSubject,
         getSubjects,
+        fetchSubjectWithActivities
       }}
     >
       {children}
     </SubjectContext.Provider>
   );
 };
+
+export default SubjectContext
