@@ -15,6 +15,8 @@ import RegisterUser from "./pages/RegisterUser"
 import HomePage from "./pages/HomePage"
 import Activities from "./pages/Activities"
 import MyTask from "./pages/MyTasks"
+import Profile from "./pages/Profile"
+import Subjects from "./pages/Subjects"
 
 function App() {
  
@@ -34,6 +36,8 @@ function App() {
                       <Route path="/home" element={<HomePage/> }/>
                       <Route path="/activities" element={<Activities/> }/>
                       <Route path="/task" element={<MyTask/> }/>
+                      <Route path="/profile" element={<Profile/> }/>
+                      <Route path="/subjects" element={<Subjects/> }/>
 
                     </Route>
                   </Route>
