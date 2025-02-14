@@ -1,4 +1,4 @@
-import ActivityList from "@/components/Activities/activityList"
+import ActivityList from "../components/Activities/ActivityList"
 import { Suspense } from "react"
 import { Loader2 } from "lucide-react"
 
