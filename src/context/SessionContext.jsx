@@ -1,7 +1,7 @@
 import { createContext, useState, useContext } from "react";
 import { useEffect } from "react";
 
-import { loginUserRequest, verifySessionRequest } from "../api/session";
+import { loginUserRequest, verifySessionRequest, sendEmailRecovery, resetPassword } from "../api/session";
 
 export const SessionContext = createContext();
 
@@ -19,10 +19,8 @@ export const useSession = () =>{
 export const SessionProvider = ({children}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([])
+  const [emailRecovery, setEmailRecovery] = useState();
   const [loading, setLoading] = useState(true)
-  
-
-  // console.log(profile.data);
   
 
   const signin = async(data) => {
@@ -36,6 +34,32 @@ export const SessionProvider = ({children}) => {
         : [error.response.data.message]
     }
   }
+
+  const fetchSendEmailRecovery = async(email) => {
+    try {
+      const res = await sendEmailRecovery(email);
+      
+      if(res.status === 200 ){
+        
+        setEmailRecovery(res.data.email);
+      }
+    } catch (error) {      
+      setErrors(Array.isArray(error.response.data))
+        ? error.response.data
+        : [error.response.data.message]
+    }
+  }
+
+  const fetchResetPassoword = async(data) => {
+    try {
+      const res = await resetPassword(data);
+    } catch (error) {
+      setErrors(Array.isArray(error.response.data))
+        ? error.response.data
+        : [error.response.data.message]
+    }
+  }
+
 
   const logout = ()=> {
     localStorage.removeItem('token');
@@ -77,8 +101,12 @@ export const SessionProvider = ({children}) => {
         isAuthenticated,
         errors,
         loading,
+        emailRecovery,
+        setEmailRecovery,
         signin,
-        logout
+        logout,
+        fetchSendEmailRecovery,
+        fetchResetPassoword
       }}
       >
       {children}
