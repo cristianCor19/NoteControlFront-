@@ -10,7 +10,7 @@ import { SubjectProvider} from "./context/SubjectContext"
 import { ActivityProvider } from "./context/ActivityContext"
 
 //pages
-import Login from "./pages/login"
+import Login from "./pages/Login"
 import RegisterUser from "./pages/RegisterUser"
 import HomePage from "./pages/HomePage"
 import Activities from "./pages/Activities"
