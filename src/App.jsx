@@ -17,6 +17,8 @@ import Activities from "./pages/Activities"
 import MyTask from "./pages/MyTasks"
 import Profile from "./pages/Profile"
 import Subjects from "./pages/Subjects"
+import RecoveryPassword from "./pages/RecoveryPassword"
+import ResetPassword from "./pages/ResetPassword"
 
 function App() {
  
@@ -27,10 +29,12 @@ function App() {
         <UserProvider>
           <SubjectProvider>
             <ActivityProvider>
-              <div className="main-container">
+              <div className="main-container bg-gradient-to-b from-blue-body/50 to-white">
                 <Routes>
                   <Route path="/" element={<Login/>}/>
                   <Route path="/register-user" element={<RegisterUser/>}/>
+                  <Route path="/recovery-password" element={<RecoveryPassword/>}/>
+                  <Route path="/reset-password" element={<ResetPassword/>}/>
                   <Route element={<ProtectedRoute/>}>
                     <Route element={<ProtectedLayout/>}>
                       <Route path="/home" element={<HomePage/> }/>
