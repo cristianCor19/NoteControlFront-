@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'htpp://localhost:3000',
+    baseURL: 'https://api-control-notes.vercel.app',
     withCredentials: true
 })
 
