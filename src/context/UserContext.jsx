@@ -1,7 +1,13 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import { enqueueSnackbar } from "notistack";
+import { useSession } from "./SessionContext";
 
-import { registerUserRequest, getProfile, updateUser, deleteUser } from "../api/user";
+import {
+  registerUserRequest,
+  getProfile,
+  updateUser,
+  deleteUser,
+} from "../api/user";
 export const UserContext = createContext();
 
 export const useUser = () => {
@@ -13,18 +19,18 @@ export const useUser = () => {
   return context;
 };
 export const UserProvider = ({ children }) => {
+  const {setIsAuthenticated, setLoading} = useSession();
   const [profile, setProfile] = useState([]);
-  const [registerUser, setRegisterUser] = useState(false);
   const [errors, setErrors] = useState([]);
   const [confirmDelete, setConfirmDelete] = useState(false);
+ 
 
   const signUp = async (user) => {
-    try {
+    try {      
       const res = await registerUserRequest(user);
 
-      if (res.status === 200) {
-        setRegisterUser(true);
-      }
+      setIsAuthenticated(true);
+      localStorage.setItem("token", res.data.token);
     } catch (error) {
       setErrors(Array.isArray(error.response.data))
         ? error.response.data
@@ -74,7 +80,7 @@ export const UserProvider = ({ children }) => {
         ? error.response.data
         : [error.response.data.message];
     }
-  }
+  };
 
   useEffect(() => {
     if (errors.length > 0) {
@@ -89,15 +95,13 @@ export const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        registerUser,
         errors,
         profile,
         confirmDelete,
         signUp,
-        setRegisterUser,
         fetchProfile,
         fetchUpdateUser,
-        fetchDeleteUser
+        fetchDeleteUser,
       }}
     >
       {children}
