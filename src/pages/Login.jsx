@@ -15,7 +15,7 @@ function Login() {
   });
   const navigate = useNavigate();
 
-  const {signin ,isAuthenticated} = useSession();
+  const {signin, signWithGoogle ,isAuthenticated} = useSession();
 
 
   const onSubmit = handleSubmit(async(data) => {
@@ -76,8 +76,12 @@ function Login() {
         <section className="pt-10">
           <p className="pb-5">O continua con</p>
           <div className="flex items-center justify-center gap-6">
-            <img src="/img/google-icon.svg" alt="" className="icons-login "/>
-            <img src="/img/facebook-icon.svg" alt="" className="icons-login shadow-amber-400"/>
+            <button onClick={signWithGoogle}>
+              <img src="/img/google-icon.svg" alt="" className="icons-login "/>
+            </button>
+            {/* <button onClick={signWithFacebook}>
+              <img src="/img/facebook-icon.svg" alt="" className="icons-login shadow-amber-400"/>
+            </button> */}
           </div>
         </section>
         <p className="mt-16">¿No tienes una cuenta? <Link to='/register-user' className="text-blue-ti font-bold">Registrate</Link></p>
