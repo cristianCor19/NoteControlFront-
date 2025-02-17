@@ -4,20 +4,15 @@ import { useUser } from "../context/UserContext";
 import { useEffect, useState} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-
+import { useSession } from "@/context/SessionContext";
 
 import './../styles/login.css'
 
 function RegisterUser() {
   const { register, handleSubmit, formState: { errors }, setValue,} = useForm();
-//   const { register, handleSubmit, formState: { errors }, setValue,} = useForm({
-//     defaultValues: {
-//       email: "",
-//       password: "",
-//     },
-//   });
   const navigate = useNavigate();
-  const {signUp ,registerUser,setRegisterUser, errors: signUpErrors} = useUser();
+  const {signUp , errors: signUpErrors} = useUser();
+  const {isAuthenticated} = useSession();
   const [showPassword, setShowPassword] = useState(false);
   const [alerPassword, setAlerPassword] = useState(false);
 
@@ -29,13 +24,10 @@ function RegisterUser() {
   const onSubmit = handleSubmit(async(data) => {
     try {
         if(data.password !== data.confirmPassword){
-            console.log('The passwords are same');
             setAlerPassword(true);
         }else{
             await signUp(data);
             setAlerPassword(false);
-            console.log('are similars');
-            
         }
     
     } catch (error) {
@@ -44,11 +36,11 @@ function RegisterUser() {
   })
 
   useEffect(() => {
-    if (registerUser) {
-      navigate("/");
-      setRegisterUser(false);
+    if (isAuthenticated) {
+      navigate("/home");
+      
     }
-  }, [registerUser, navigate, setRegisterUser]);
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="flex items-center justify-center h-screen text-center">
@@ -119,13 +111,7 @@ function RegisterUser() {
           )}
           <button type="submit" className="bg-blue-ti text-white p-1.5 rounded-sm mt-6 mb-5">Registrarte</button>
         </form>
-        <section className="mt-6 mb-5">
-          <p className="pb-5">O continua con</p>
-          <div className="flex items-center justify-center gap-6">
-            <img src="/img/google-icon.svg" alt="" className="icons-login "/>
-            <img src="/img/facebook-icon.svg" alt="" className="icons-login shadow-amber-400"/>
-          </div>
-        </section>
+        
         <Link to='/' className="text-blue-ti font-bold">¿Ya tienes una cuenta?</Link>
 
       </div>
