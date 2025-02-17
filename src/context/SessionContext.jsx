@@ -155,7 +155,8 @@ export const SessionProvider = ({ children }) => {
         setEmailRecovery,
         signin,
         signWithGoogle,
-      
+        setIsAuthenticated,
+        setLoading,
         logout,
         fetchSendEmailRecovery,
         fetchResetPassoword,
